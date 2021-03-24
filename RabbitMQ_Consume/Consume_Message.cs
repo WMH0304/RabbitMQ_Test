@@ -22,17 +22,19 @@ namespace RabbitMQ_Consume
                     
                     try
                     {
+                        EventingBasicConsumer consumer = new EventingBasicConsumer(model);
+
+                        //触发接收消息的事件
+                        consumer.Received += (model, ea) =>
+                        {
+                            var by = ea.Body;
+                            var message = Encoding.UTF8.GetString(by.ToArray());
+                            Console.WriteLine($"接受——{message}");
+                        };
+
                         while (!model.IsClosed)
                         {
-                            EventingBasicConsumer consumer = new EventingBasicConsumer(model);
-
-                            //触发接收消息的事件
-                            consumer.Received += (model, ea) =>
-                            {
-                                var by = ea.Body;
-                                var message = Encoding.UTF8.GetString(by.ToArray());
-                                Console.WriteLine($"接受——{message}");
-                            };
+                          
                             model.BasicConsume(queue: "MyMessage", autoAck: true, consumer: consumer);
                         }
                        

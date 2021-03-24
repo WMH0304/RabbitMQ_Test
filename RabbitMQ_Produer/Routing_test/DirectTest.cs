@@ -59,7 +59,7 @@ namespace RabbitMQ_Produer.Routing_test
                     List<LogMsg> logMsgs = new List<LogMsg>();
                     for (int i = 0; i < 100; i++)
                     {
-                        if (i%4 ==0)
+                        if (i % 4 == 0)
                         {
                             logMsgs.Add(new LogMsg() { Types = "Info", Contents = Encoding.UTF8.GetBytes($"info--{i}") });
                         }
